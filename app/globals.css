@@ -25,7 +25,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --background: #0a0a0a;
     --foreground: #ededed;
 
@@ -35,6 +35,17 @@
     --stamp-brick: #f87171;
     --stamp-seal: #4ade80;
   }
+}
+
+:root[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  --accent: #6b93be;
+  --stamp-slate: #94a3b8;
+  --stamp-amber: #f59e0b;
+  --stamp-brick: #f87171;
+  --stamp-seal: #4ade80;
 }
 
 body {

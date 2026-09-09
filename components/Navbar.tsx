@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const links = [
   { href: "/", label: "Candidature" },
@@ -36,7 +37,8 @@ export default function Navbar() {
             </nav>
           </Show>
         </div>
-        <div className="flex gap-3">
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
           <Show when="signed-out">
             <SignInButton mode="modal">
               <button className="text-xs sm:text-sm px-3 py-1.5 rounded-lg border border-foreground/20 text-foreground hover:bg-foreground/5">
