@@ -37,6 +37,7 @@ export default function RootLayout({
     <html 
       lang="it"
       className={`${sourceSerif.variable} ${plexSans.variable} ${plexMono.variable}`}
+      suppressHydrationWarning
     >
       <body>
         <Script id="theme-init" strategy="beforeInteractive">

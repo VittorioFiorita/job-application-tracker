@@ -9,6 +9,7 @@ type Application = {
   id: number;
   position: string;
   status: string;
+  createdAt: string;
   jobDescription: string;
   matchScore: number | null;
   matchSuggestions: string | null;
@@ -35,11 +36,11 @@ export default function ApplicationDetail() {
   }, [params.id]);
 
   if (loading) {
-    return <p className="max-w-5xl mx-auto p-8 text-gray-400">Caricamento...</p>;
+    return <p className="max-w-5xl mx-auto p-8 text-foreground/60">Caricamento...</p>;
   }
 
   if (!application) {
-    return <p className="max-w-5xl mx-auto p-8 text-gray-400">Candidatura non trovata</p>;
+    return <p className="max-w-5xl mx-auto p-8 text-foreground/60">Candidatura non trovata</p>;
   }
 
   const suggestions: string[] = application.matchSuggestions
@@ -49,14 +50,22 @@ export default function ApplicationDetail() {
   return (
     <main className="max-w-5xl mx-auto p-8">
       <h1 className="text-xl sm:text-2xl font-bold mb-1">{application.position}</h1>
-      <p className="text-gray-400 mb-6">{application.company.name}</p>
+      <p className="text-foreground/60 mb-1">{application.company.name}</p>
+
+      <div className="flex items-center gap-2 text-xs font-mono text-foreground/40 mb-6">
+        <span>#{String(application.id).padStart(5, "0")}</span>
+        <span aria-hidden="true">·</span>
+        <time dateTime={application.createdAt}>
+          {new Date(application.createdAt).toLocaleDateString("it-IT")}
+        </time>
+      </div>
 
       {application.matchScore !== null && (
-        <div className="bg-white/2 border border-gray-900 rounded-xl p-5 mb-6">
+        <div className="bg-foreground/3 border border-foreground/10 rounded-xl p-5 mb-6">
           <div className="mb-4">
             <MatchBar score={application.matchScore} />
           </div>
-          <ul className="list-disc list-inside text-gray-300 text-sm space-y-1">
+          <ul className="list-disc list-inside text-foreground/80 text-sm space-y-1">
             {suggestions.map((s, i) => (
               <li key={i}>{s}</li>
             ))}
@@ -65,8 +74,8 @@ export default function ApplicationDetail() {
       )}
 
       <h2 className="font-semibold mb-2">Job description</h2>
-      <div className="bg-white/2 border border-gray-900 rounded-xl p-5">
-        <p className="text-gray-300 whitespace-pre-wrap">{application.jobDescription}</p>
+      <div className="bg-foreground/3 border border-foreground/10 rounded-xl p-5">
+        <p className="text-foreground/80 whitespace-pre-wrap">{application.jobDescription}</p>
       </div>
     </main>
   );
