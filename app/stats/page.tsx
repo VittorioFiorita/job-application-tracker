@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { fetchJson } from "@/lib/fetch-json";
 import StatCard from "@/components/StatCard";
 import Button from "@/components/Button";
 
@@ -24,14 +25,21 @@ export default function StatsPage() {
 
     useEffect(() => {
         const loadStats = async () => {
-            const res = await fetch("/api/stats");
-            const data = await res.json();
-            setStats(data);
-            setLoading(false);
+            try {
+                const data = await fetchJson<Stats>("/api/stats");
+                setStats(data);
+            } catch {
+                setStats(null);
+            } finally{
+                setLoading(false);
+            }
 
-            const insightRes = await fetch("/api/insights");
-            const insightData = await insightRes.json();
-            setInsight(insightData);
+            try{
+                const insightData = await fetchJson<Insight | null>("/api/insights");
+                setInsight(insightData);
+            } catch {
+                setInsight(null);
+            }
         };
         loadStats();
     }, []);
@@ -46,9 +54,12 @@ export default function StatsPage() {
 
     const handleGenerateInsight = async () => {
         setGenerating(true);
-        const res = await fetch("/api/insights", { method: "POST" });
-        const data = await res.json();
-        setInsight(data);
+        try {
+            const data = await fetchJson<Insight>("/api/insights", {method: "POST"});
+            setInsight(data);
+        } catch {
+            // nessun Toast su questa pagina: fallimento silenzioso, insight resta quello precedente
+        }
         setGenerating(false);
     };
 

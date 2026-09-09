@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { fetchJson } from "@/lib/fetch-json";
 import Button from "@/components/Button";
 
 export default function ProfilePage() {
@@ -10,12 +11,16 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const loadProfile = async () => {
-      const res = await fetch("/api/profile");
-      const data = await res.json();
-      if (data?.cvText) {
-        setCvText(data.cvText);
+      try {
+        const data = await fetchJson<{cvText: string} | null>("/api/profile");
+        if (data?.cvText) {
+          setCvText(data.cvText)
+        }
+      } catch {
+        //nessun profilo caricato, il form resta vuoto
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     loadProfile();
   }, []);
@@ -23,11 +28,15 @@ export default function ProfilePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
-    await fetch("/api/profile", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ cvText }),
-    });
+    try {
+      await fetchJson("/api/profile", {
+        method:"POST",
+        headers: {"Content-Type" : "application/json"},
+        body: JSON.stringify({cvText})
+      });
+    } catch {
+      //nessun Toast su questa pagina: salvataggio fallito senza feedback visivo
+    }
     setSaving(false);
   };
 
