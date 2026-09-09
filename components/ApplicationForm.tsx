@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Button from "./Button";
 
 type ApplicationFormProps = {
   onSubmit: (data: {
@@ -26,7 +27,7 @@ export default function ApplicationForm({ onSubmit, onCancel }: ApplicationFormP
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/[0.02] border border-gray-900 rounded-xl p-5 flex flex-col gap-3 mb-8">
+    <form onSubmit={handleSubmit} className="bg-white/2 border border-gray-900 rounded-xl p-5 flex flex-col gap-3 mb-8">
       <input
         type="text"
         placeholder="Azienda"
@@ -52,12 +53,8 @@ export default function ApplicationForm({ onSubmit, onCancel }: ApplicationFormP
         required
       />
       <div className="flex gap-2">
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-          Aggiungi
-        </button>
-        <button type="button" onClick={onCancel} className="text-gray-400 hover:text-gray-200 px-4 py-2">
-          Annulla
-        </button>
+        <Button type="submit">Aggiungi</Button>
+        <Button type="button" variant="ghost" onClick={onCancel}>Annulla</Button>
       </div>
     </form>
   );

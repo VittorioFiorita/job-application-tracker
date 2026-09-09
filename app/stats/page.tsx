@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import StatCard from "@/components/StatCard";
+import Button from "@/components/Button";
 
 type Stats = {
     total: number,
@@ -80,13 +81,9 @@ export default function StatsPage() {
             <div className="mt-8 pt-6 border-t border-gray-700">
                 <div className="flex justify-between items-center mb-3">
                     <h2 className="font-semibold">Analisi AI</h2>
-                    <button
-                        onClick={handleGenerateInsight}
-                        disabled={generating}
-                        className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700 disabled:opacity-50"
-                    >
+                    <Button onClick={handleGenerateInsight} disabled={generating} size="sm">
                         {generating ? "Analisi in corso..." : "Genera Analisi"}
-                    </button>
+                    </Button>
                 </div>
                 {insight ? (
                     <div className="bg-gray-800 rounded p-4">

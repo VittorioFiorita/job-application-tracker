@@ -6,6 +6,7 @@ import ApplicationCard from "@/components/ApplicationCard";
 import ApplicationForm from "@/components/ApplicationForm";
 import Toast from "@/components/Toast";
 import ConfirmModal from "@/components/ConfirmModal";
+import Button from "@/components/Button";
 import { fetchJson } from "@/lib/fetch-json";
 
 type Application = {
@@ -134,12 +135,12 @@ export default function Home() {
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
         <h1 className="text-xl sm:text-2xl font-bold">Le mie candidature</h1>
         {!formOpen && (
-          <button
+          <Button
             onClick={() => setFormOpen(true)}
-            className="self-start bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-medium"
+            className="self-start"
           >
             + Nuova candidatura
-          </button>
+          </Button>
         )}
       </div>
       {formOpen && (

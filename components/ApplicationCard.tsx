@@ -1,6 +1,7 @@
 import Link from "next/link";
 import MatchBar from "@/components/MatchBar";
 import StatusSelect from "@/components/StatusSelect";
+import Button from "./Button";
 
 type Application = {
   id: number;
@@ -26,7 +27,7 @@ export default function ApplicationCard({
   isMatching,
 }: ApplicationCardProps) {
   return (
-    <li className="bg-white/[0.01] border border-gray-900 rounded-2xl p-4">
+    <li className="bg-white/1 border border-gray-900 rounded-2xl p-4">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4">
         <div className="flex items-start gap-3">
           <div className="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center shrink-0">
@@ -59,19 +60,15 @@ export default function ApplicationCard({
       {app.matchScore !== null ? (
         <MatchBar score={app.matchScore} />
       ) : (
-        <button
-          onClick={() => onMatch(app.id)}
-          disabled={isMatching}
-          className="w-full text-xs bg-purple-600 text-white px-3 py-1.5 rounded-lg hover:bg-purple-700 disabled:opacity-50"
-        >
+        <Button onClick={() => onMatch(app.id)} disabled={isMatching} size="sm" fullWidth>
           {isMatching ? "Valutazione..." : "Valuta match"}
-        </button>
+        </Button>
       )}
 
       <div className="flex justify-end mt-2">
-        <button onClick={() => onDelete(app.id)} className="text-xs text-red-400 hover:text-red-300">
+        <Button onClick={() => onDelete(app.id)} variant="danger-ghost" size="sm">
           Elimina
-        </button>
+        </Button>
       </div>
     </li>
   );

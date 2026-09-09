@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Button from "@/components/Button";
 
 export default function ProfilePage() {
   const [cvText, setCvText] = useState("");
@@ -43,7 +44,7 @@ export default function ProfilePage() {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white/[0.02] border border-gray-900 rounded-xl p-5 flex flex-col gap-3"
+        className="bg-white/2 border border-gray-900 rounded-xl p-5 flex flex-col gap-3"
       >
         <textarea
           value={cvText}
@@ -52,13 +53,9 @@ export default function ProfilePage() {
           className="bg-gray-900 border border-gray-700 rounded-lg p-3"
           placeholder="Incolla qui il tuo CV..."
         />
-        <button
-          type="submit"
-          disabled={saving}
-          className="self-start bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
-        >
+        <Button type="submit" disabled={saving} className="self-start">
           {saving ? "Salvataggio..." : "Salva profilo"}
-        </button>
+        </Button>
       </form>
     </main>
   );
