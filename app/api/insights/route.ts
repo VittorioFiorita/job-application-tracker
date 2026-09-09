@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { isRateLimited } from "@/lib/rate-limit";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -25,6 +26,13 @@ export async function POST() {
 
     if(!userId) {
         return NextResponse.json({ error: "Non autenticato" }, { status: 401 });
+    }
+
+    if(isRateLimited(userId, 60_000)) {
+        return NextResponse.json(
+            {error: "Troppe richieste, riprova tra qualche minuto"},
+            {status: 429}
+        )
     }
 
     const applications = await prisma.application.findMany({
