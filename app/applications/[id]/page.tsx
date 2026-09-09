@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import MatchBar from "@/components/MatchBar";
+import { fetchJson } from "@/lib/fetch-json";
 
 type Application = {
   id: number;
@@ -21,10 +22,14 @@ export default function ApplicationDetail() {
 
   useEffect(() => {
     const loadApplication = async () => {
-      const res = await fetch(`/api/applications/${params.id}`);
-      const data = await res.json();
-      setApplication(data);
-      setLoading(false);
+      try {
+        const data = await fetchJson<Application>(`/api/applications/${params.id}`);
+        setApplication(data);
+      } catch {
+        setApplication(null);
+      } finally {
+        setLoading(false);
+      }
     };
     loadApplication();
   }, [params.id]);
