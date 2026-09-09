@@ -52,7 +52,7 @@ export default function ApplicationDetail() {
       <p className="text-gray-400 mb-6">{application.company.name}</p>
 
       {application.matchScore !== null && (
-        <div className="bg-white/[0.02] border border-gray-900 rounded-xl p-5 mb-6">
+        <div className="bg-white/2 border border-gray-900 rounded-xl p-5 mb-6">
           <div className="mb-4">
             <MatchBar score={application.matchScore} />
           </div>
@@ -65,7 +65,7 @@ export default function ApplicationDetail() {
       )}
 
       <h2 className="font-semibold mb-2">Job description</h2>
-      <div className="bg-white/[0.02] border border-gray-900 rounded-xl p-5">
+      <div className="bg-white/2 border border-gray-900 rounded-xl p-5">
         <p className="text-gray-300 whitespace-pre-wrap">{application.jobDescription}</p>
       </div>
     </main>

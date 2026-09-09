@@ -45,11 +45,11 @@ export default function StatsPage() {
     }, []);
 
     if (loading) {
-        return <p className="p-8 text-gray-500">Caricamento...</p>;
+        return <p className="p-8 text-foreground/60">Caricamento...</p>;
     }
 
     if (!stats) {
-        return <p className="p-8 text-gray-500">Impossibile caricare le statistiche</p>;
+        return <p className="p-8 text-foreground/60">Impossibile caricare le statistiche</p>;
     }
 
     const handleGenerateInsight = async () => {
@@ -75,21 +75,21 @@ export default function StatsPage() {
                     label="Match medio"
                     value={stats.averageMatch !== null ? `${Math.round(stats.averageMatch)}%` : "—"}
                 />
-                <StatCard label="In colloquio" value={getCount("colloquio")} variant="accent" />
-                <StatCard label="Accettate" value={getCount("accettata")} variant="success" />
+                <StatCard label="In colloquio" value={getCount("colloquio")} variant="amber" />
+                <StatCard label="Accettate" value={getCount("accettata")} variant="seal" />
             </div>
 
             <h2 className="font-semibold mb-3">Distribuzione per status</h2>
             <ul className="space-y-2">
                 {stats.byStatus.map((s) => (
-                    <li key={s.status} className="flex justify-between border-b border-gray-700 pb-2">
+                    <li key={s.status} className="flex justify-between border-b border-foreground/10 pb-2">
                         <span className="capitalize">{s.status}</span>
-                        <span className="text-gray-400">{s._count}</span>
+                        <span className="font-mono text-foreground/60">{s._count}</span>
                     </li>
                 ))}
             </ul>
 
-            <div className="mt-8 pt-6 border-t border-gray-700">
+            <div className="mt-8 pt-6 border-t border-foreground/10">
                 <div className="flex justify-between items-center mb-3">
                     <h2 className="font-semibold">Analisi AI</h2>
                     <Button onClick={handleGenerateInsight} disabled={generating} size="sm">
@@ -97,14 +97,14 @@ export default function StatsPage() {
                     </Button>
                 </div>
                 {insight ? (
-                    <div className="bg-gray-800 rounded p-4">
-                        <p className="text-sm text-gray-200">{insight.content}</p>
-                        <p className="text-xs text-gray-500 mt-3">
+                    <div className="bg-foreground/5 rounded p-4">
+                        <p className="text-sm text-foreground">{insight.content}</p>
+                        <p className="text-xs font-mono text-foreground/40 mt-3">
                             Generata il {new Date(insight.createdAt).toLocaleString("it-IT")}
                         </p>
                     </div>
                 ) : (
-                    <p className="text-gray-500 text-sm">Nessuna analisi generata ancora.</p>
+                    <p className="text-foreground/60 text-sm">Nessuna analisi generata ancora.</p>
                 )}
             </div>
         </main>
