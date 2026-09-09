@@ -41,25 +41,25 @@ export default function ProfilePage() {
   };
 
   if (loading) {
-    return <p className="max-w-5xl mx-auto p-8 text-gray-400">Caricamento...</p>;
+    return <p className="max-w-5xl mx-auto p-8 text-foreground/60">Caricamento...</p>;
   }
 
   return (
     <main className="max-w-5xl mx-auto p-8">
       <h1 className="text-xl sm:text-2xl font-bold mb-1">Il mio profilo</h1>
-      <p className="text-gray-400 mb-6">
+      <p className="text-foreground/60 mb-6">
         Incolla qui il testo del tuo CV. Verrà usato per valutare il match con le candidature.
       </p>
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white/2 border border-gray-900 rounded-xl p-5 flex flex-col gap-3"
+        className="bg-foreground/3 border border-foreground/10 rounded-xl p-5 flex flex-col gap-3"
       >
         <textarea
           value={cvText}
           onChange={(e) => setCvText(e.target.value)}
           rows={12}
-          className="bg-gray-900 border border-gray-700 rounded-lg p-3"
+          className="bg-foreground/5 border border-foreground/15 rounded-lg p-3 placeholder:text-foreground/40 focus:outline-none focus:border-accent"
           placeholder="Incolla qui il tuo CV..."
         />
         <Button type="submit" disabled={saving} className="self-start">
