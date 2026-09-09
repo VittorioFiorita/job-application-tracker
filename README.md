@@ -4,6 +4,8 @@
 
 A job application tracker with AI-powered CV matching and insights, built with Next.js, Prisma, and Clerk. Each application is treated as an archival case file — the UI ("Dossier") borrows visual language from paper records: ink stamps for status, reference numbers, serif headings.
 
+**Live demo:** [job-application-tracker-omega-red.vercel.app](https://job-application-tracker-omega-red.vercel.app)
+
 ## Features
 
 - Track job applications (company, position, job description, status)
