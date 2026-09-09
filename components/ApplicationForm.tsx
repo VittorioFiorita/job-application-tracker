@@ -27,13 +27,13 @@ export default function ApplicationForm({ onSubmit, onCancel }: ApplicationFormP
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/2 border border-gray-900 rounded-xl p-5 flex flex-col gap-3 mb-8">
+    <form onSubmit={handleSubmit} className="bg-foreground/3 border border-foreground/10 rounded-xl p-5 flex flex-col gap-3 mb-8">
       <input
         type="text"
         placeholder="Azienda"
         value={companyName}
         onChange={(e) => setCompanyName(e.target.value)}
-        className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2"
+        className="bg-foreground/5 border border-foreground/15 rounded-lg px-3 py-2 placeholder:text-foreground/40 focus:outline-none focus:border-accent"
         required
       />
       <input
@@ -41,7 +41,7 @@ export default function ApplicationForm({ onSubmit, onCancel }: ApplicationFormP
         placeholder="Posizione"
         value={position}
         onChange={(e) => setPosition(e.target.value)}
-        className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2"
+        className="bg-foreground/5 border border-foreground/15 rounded-lg px-3 py-2 placeholder:text-foreground/40 focus:outline-none focus:border-accent"
         required
       />
       <textarea
@@ -49,7 +49,7 @@ export default function ApplicationForm({ onSubmit, onCancel }: ApplicationFormP
         value={jobDescription}
         onChange={(e) => setJobDescription(e.target.value)}
         rows={4}
-        className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2"
+        className="bg-foreground/5 border border-foreground/15 rounded-lg px-3 py-2 placeholder:text-foreground/40 focus:outline-none focus:border-accent"
         required
       />
       <div className="flex gap-2">
