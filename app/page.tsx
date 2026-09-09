@@ -6,6 +6,7 @@ import ApplicationCard from "@/components/ApplicationCard";
 import ApplicationForm from "@/components/ApplicationForm";
 import Toast from "@/components/Toast";
 import ConfirmModal from "@/components/ConfirmModal";
+import { fetchJson } from "@/lib/fetch-json";
 
 type Application = {
   id: number;
@@ -27,53 +28,70 @@ export default function Home() {
   const { isSignedIn, isLoaded } = useUser();
   const [formOpen, setFormOpen] = useState(false);
 
-  const loadApplications = async () => {
-    const res = await fetch("/api/applications");
-    const data = await res.json();
-    setApplications(data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    loadApplications();
-  }, []);
-
   const showToast = (message: string) => {
     setToast(message);
     setTimeout(() => setToast(null), 3000);
   };
+
+  const loadApplications = async () => {
+    try {
+      const data = await fetchJson<Application[]>("/api/applications");
+      setApplications(data);
+    } catch {
+      showToast("Errore nel caricamento delle candidature");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadApplications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleCreate = async (data: {
     companyName: string;
     position: string;
     jobDescription: string;
   }) => {
-    await fetch("/api/applications", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    try {
+      await fetchJson("/api/applications", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      showToast("Candidatura aggiunta");
+    } catch {
+      showToast("Errore nella creazione della candidatura");
+    }
     loadApplications();
-    showToast("Candidatura aggiunta");
   };
 
   const handleMatch = async (id: number) => {
     setMatchingId(id);
-    await fetch(`/api/applications/${id}/match`, { method: "POST" });
+    try {
+      await fetchJson(`/api/applications/${id}/match`, {method: "POST"});
+      showToast("Match valutato")
+    } catch {
+      showToast("Errore nella valutazione del match");
+    }
     setMatchingId(null);
     loadApplications();
-    showToast("Match valutato");
   };
 
   const handleStatusChange = async (id: number, status: string) => {
-    await fetch(`/api/applications/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
+    try {
+      await fetchJson(`/api/applications/${id}`, {
+        method: "PATCH",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({status}),
+      });
+      showToast("Status aggiornato");
+    } catch {
+      showToast("Errore nell'aggiornamento dello status");
+    }
     loadApplications();
-    showToast("Status aggiornato");
   };
 
   const handleDelete = (id: number) => {
@@ -82,10 +100,14 @@ export default function Home() {
 
   const confirmDelete = async () => {
     if (deleteTargetId === null) return;
-    await fetch(`/api/applications/${deleteTargetId}`, { method: "DELETE" });
+    try {
+      await fetchJson(`/api/applications/${deleteTargetId}`, { method: "DELETE" });
+      showToast("Candidatura eliminata");
+    } catch {
+      showToast("Errore nell'eliminazione della candidatura");
+    }
     setDeleteTargetId(null);
     loadApplications();
-    showToast("Candidatura eliminata");
   };
 
   if (!isLoaded) {
