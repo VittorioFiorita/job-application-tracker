@@ -19,8 +19,10 @@ export async function POST(request: Request) {
         );
     }
 
-    const company = await prisma.company.create({
-        data: { name: companyName },
+    const company = await prisma.company.findFirst({
+        where: {name: {equals: companyName.trim(), mode: "insensitive"}},
+    }) ?? await prisma.company.create({
+        data: {name: companyName.trim()},
     });
 
     const application = await prisma.application.create({
