@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import ApplicationCard from "@/components/applications/ApplicationCard";
+import ApplicationsTable from "@/components/applications/ApplicationsTable";
+import ApplicationsToolbar from "@/components/applications/ApplicationsToolbar";
 import ApplicationForm, { type ApplicationFormData } from "@/components/applications/ApplicationForm";
 import Toast from "@/components/ui/Toast";
 import ConfirmModal from "@/components/ui/ConfirmModal";
@@ -29,6 +31,40 @@ export default function Home() {
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
   const { isSignedIn, isLoaded } = useUser();
   const [formOpen, setFormOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [sortBy, setSortBy] = useState("date-desc");
+
+  const filteredApplications = useMemo(() => {
+    let result = applications;
+
+    if (search.trim()) {
+      const query = search.trim().toLowerCase();
+      result = result.filter(
+        (app) =>
+          app.position.toLowerCase().includes(query) ||
+          app.company.name.toLowerCase().includes(query)
+      );
+    }
+
+    if (statusFilter) {
+      result = result.filter((app) => app.status === statusFilter);
+    }
+
+    return [...result].sort((a, b) => {
+      switch (sortBy) {
+        case "date-asc":
+          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        case "match-desc":
+          return (b.matchScore ?? -1) - (a.matchScore ?? -1);
+        case "match-asc":
+          return (a.matchScore ?? -1) - (b.matchScore ?? -1);
+        case "date-desc":
+        default:
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      }
+    });
+  }, [applications, search, statusFilter, sortBy]);
 
   const showToast = (message: string) => {
     setToast(message);
@@ -146,18 +182,44 @@ export default function Home() {
         ) : applications.length === 0 ? (
           <p className="text-gray-400">Nessuna candidatura ancora.</p>
         ) : (
-          <ul className="space-y-3">
-            {applications.map((app) => (
-              <ApplicationCard
-                key={app.id}
-                app={app}
-                onStatusChange={handleStatusChange}
-                onMatch={handleMatch}
-                onDelete={handleDelete}
-                isMatching={matchingId === app.id}
-              />
-            ))}
-          </ul>
+          <>
+            <ApplicationsToolbar
+              search={search}
+              onSearchChange={setSearch}
+              statusFilter={statusFilter}
+              onStatusFilterChange={setStatusFilter}
+              sortBy={sortBy}
+              onSortByChange={setSortBy}
+            />
+
+            {filteredApplications.length === 0 ? (
+              <p className="text-gray-400">Nessun risultato per i filtri applicati.</p>
+            ) : (
+              <>
+                <div className="hidden lg:block">
+                  <ApplicationsTable
+                    applications={filteredApplications}
+                    onStatusChange={handleStatusChange}
+                    onMatch={handleMatch}
+                    onDelete={handleDelete}
+                    matchingId={matchingId}
+                  />
+                </div>
+                <ul className="lg:hidden space-y-3">
+                  {filteredApplications.map((app) => (
+                    <ApplicationCard
+                      key={app.id}
+                      app={app}
+                      onStatusChange={handleStatusChange}
+                      onMatch={handleMatch}
+                      onDelete={handleDelete}
+                      isMatching={matchingId === app.id}
+                    />
+                  ))}
+                </ul>
+              </>
+            )}
+          </>
         )}
 
         {toast && <Toast message={toast} onClose={() => setToast(null)} />}
