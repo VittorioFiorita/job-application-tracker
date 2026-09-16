@@ -1,4 +1,4 @@
-# Job Application Tracker
+# JobDossier
 
 ![CI](https://github.com/VittorioFiorita/job-application-tracker/actions/workflows/ci.yml/badge.svg)
 
@@ -79,21 +79,21 @@ A job application tracker with AI-powered CV matching and insights, built with N
 
 ### Environment variables
 
-| Variable | Description |
-|---|---|
-| `DATABASE_URL` | PostgreSQL connection string |
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key |
-| `CLERK_SECRET_KEY` | Clerk secret key |
-| `ANTHROPIC_API_KEY` | Anthropic API key, used for CV matching and insights |
+| Variable                            | Description                                          |
+| ----------------------------------- | ---------------------------------------------------- |
+| `DATABASE_URL`                      | PostgreSQL connection string                         |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key                                |
+| `CLERK_SECRET_KEY`                  | Clerk secret key                                     |
+| `ANTHROPIC_API_KEY`                 | Anthropic API key, used for CV matching and insights |
 
 ## Available scripts
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start the dev server (Turbopack) |
-| `npm run build` | Production build |
-| `npm run start` | Start the production server |
-| `npm run lint` | Run ESLint |
+| Command         | Description                      |
+| --------------- | -------------------------------- |
+| `npm run dev`   | Start the dev server (Turbopack) |
+| `npm run build` | Production build                 |
+| `npm run start` | Start the production server      |
+| `npm run lint`  | Run ESLint                       |
 
 ## CI
 

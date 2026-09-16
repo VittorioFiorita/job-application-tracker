@@ -24,8 +24,8 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Job Application Tracker",
-  description: "Gestisci le tue candidature di lavoro",
+  title: "JobDossier",
+  description: "Gestisci le tue candidature di lavoro con JobDossier",
 };
 
 export default function RootLayout({

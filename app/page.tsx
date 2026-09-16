@@ -118,7 +118,7 @@ export default function Home() {
   if (!isSignedIn) {
     return (
       <main className="max-w-2xl mx-auto p-8 text-center">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4">Job Application Tracker</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4">JobDossier</h1>
         <p className="text-gray-400 mb-6">
           Gestisci le tue candidature di lavoro e scopri quanto il tuo profilo
           combacia con ogni annuncio, grazie a un&apos;analisi automatica basata su AI.

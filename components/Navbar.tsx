@@ -18,7 +18,7 @@ export default function Navbar() {
     <div className="max-w-5xl mx-auto p-4">
       <header className="flex flex-wrap justify-between items-center gap-2 sm:gap-3 bg-foreground/3 border border-foreground/10 rounded-xl px-3 sm:px-5 py-3">
         <div className="flex items-center gap-3 sm:gap-7">
-          <span className="font-serif font-semibold text-sm hidden sm:block">Job Tracker</span>
+          <span className="font-serif font-semibold text-sm hidden sm:block">JobDossier</span>
           <Show when="signed-in">
             <nav className="flex gap-1">
               {links.map((link) => (
