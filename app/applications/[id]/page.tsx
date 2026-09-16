@@ -14,6 +14,13 @@ type Application = {
   jobDescription: string;
   matchScore: number | null;
   matchSuggestions: string | null;
+  jobUrl: string | null;
+  location: string | null;
+  employmentType: string | null;
+  seniority: string | null;
+  salaryRange: string | null;
+  source: string | null;
+  notes: string | null;
   company: { name: string };
 };
 
@@ -63,6 +70,65 @@ export default function ApplicationDetail() {
           </time>
         </div>
 
+        {(application.jobUrl || application.location || application.employmentType || application.seniority || application.salaryRange || application.source) && (
+          <dl className="grid grid-cols-2 sm:grid-cols-3 gap-4 bg-foreground/3 border border-foreground/10 rounded-xl p-5 mb-6 text-sm">
+            {application.location && (
+              <div>
+                <dt className="text-foreground/40 text-xs uppercase tracking-wide mb-0.5">Location</dt>
+                <dd>{application.location}</dd>
+              </div>
+            )}
+            {application.employmentType && (
+              <div>
+                <dt className="text-foreground/40 text-xs uppercase tracking-wide mb-0.5">Contratto</dt>
+                <dd>{application.employmentType}</dd>
+              </div>
+            )}
+            {application.seniority && (
+              <div>
+                <dt className="text-foreground/40 text-xs uppercase tracking-wide mb-0.5">Seniority</dt>
+                <dd>{application.seniority}</dd>
+              </div>
+            )}
+            {application.salaryRange && (
+              <div>
+                <dt className="text-foreground/40 text-xs uppercase tracking-wide mb-0.5">RAL</dt>
+                <dd className="font-mono">{application.salaryRange}</dd>
+              </div>
+            )}
+            {application.source && (
+              <div>
+                <dt className="text-foreground/40 text-xs uppercase tracking-wide mb-0.5">Fonte</dt>
+                <dd>{application.source}</dd>
+              </div>
+            )}
+            {application.jobUrl && (
+              <div>
+                <dt className="text-foreground/40 text-xs uppercase tracking-wide mb-0.5">Annuncio</dt>
+                <dd>
+                  <a href={application.jobUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                    Apri link ↗
+                  </a>
+                </dd>
+              </div>
+            )}
+          </dl>
+        )}
+
+        <h2 className="font-semibold mb-2">Job description</h2>
+        <div className="bg-foreground/3 border border-foreground/10 rounded-xl p-5">
+          <p className="text-foreground/80 whitespace-pre-wrap">{application.jobDescription}</p>
+        </div>
+
+        {application.notes && (
+          <>
+            <h2 className="font-semibold mb-2 mt-6">Note</h2>
+            <div className="bg-foreground/3 border border-foreground/10 rounded-xl p-5">
+              <p className="text-foreground/80 whitespace-pre-wrap">{application.notes}</p>
+            </div>
+          </>
+        )}
+
         {application.matchScore !== null && (
           <div className="bg-foreground/3 border border-foreground/10 rounded-xl p-5 mb-6">
             <div className="mb-4">
@@ -74,12 +140,7 @@ export default function ApplicationDetail() {
               ))}
             </ul>
           </div>
-        )}
-
-        <h2 className="font-semibold mb-2">Job description</h2>
-        <div className="bg-foreground/3 border border-foreground/10 rounded-xl p-5">
-          <p className="text-foreground/80 whitespace-pre-wrap">{application.jobDescription}</p>
-        </div>
+        )} 
       </main>
     </>
   );

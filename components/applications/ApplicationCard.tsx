@@ -9,6 +9,10 @@ type Application = {
   status: string;
   createdAt: string;
   matchScore: number | null;
+  location?: string | null;
+  employmentType?: string | null;
+  seniority?: string | null;
+  salaryRange?: string | null;
   company: { name: string };
 };
 
@@ -65,6 +69,31 @@ export default function ApplicationCard({
           {new Date(app.createdAt).toLocaleDateString("it-IT")}
         </time>
       </div>
+
+      {(app.location || app.employmentType || app.seniority || app.salaryRange) && (
+        <div className="flex flex-wrap items-center gap-1.5 mb-3">
+          {app.location && (
+            <span className="text-xs px-2 py-0.5 rounded-full bg-foreground/5 text-foreground/60">
+              {app.location}
+            </span>
+          )}
+          {app.employmentType && (
+            <span className="text-xs px-2 py-0.5 rounded-full bg-foreground/5 text-foreground/60">
+              {app.employmentType}
+            </span>
+          )}
+          {app.seniority && (
+            <span className="text-xs px-2 py-0.5 rounded-full bg-foreground/5 text-foreground/60">
+              {app.seniority}
+            </span>
+          )}
+          {app.salaryRange && (
+            <span className="text-xs px-2 py-0.5 rounded-full bg-stamp-amber/10 text-stamp-amber font-mono">
+              {app.salaryRange}
+            </span>
+          )}
+        </div>
+      )}
 
       {app.matchScore !== null ? (
         <MatchBar score={app.matchScore} />
