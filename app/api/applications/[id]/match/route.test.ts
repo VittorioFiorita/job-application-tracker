@@ -83,10 +83,21 @@ describe("POST /api/applications/[id]/match", () => {
     expect(res.status).toBe(404);
   });
 
-  it("returns 400 when the user has no CV profile", async () => {
+  it("returns 400 when the profile doesn't exist", async () => {
     mockedAuth.mockResolvedValue({ userId: "user_1" } as never);
     mockedGetOwned.mockResolvedValue({ id: 1, jobDescription: "desc" } as never);
     vi.mocked(prisma.userProfile.findUnique).mockResolvedValue(null);
+
+    const res = await POST(makeRequest(), makeParams("1"));
+
+    expect(res.status).toBe(400);
+  });
+
+
+  it("returns 400 when the profile has no usable CV data", async () => {
+    mockedAuth.mockResolvedValue({ userId: "user_1" } as never);
+    mockedGetOwned.mockResolvedValue({ id: 1, jobDescription: "desc" } as never);
+    vi.mocked(prisma.userProfile.findUnique).mockResolvedValue({ userId: "user_1", cvText: null } as never);
 
     const res = await POST(makeRequest(), makeParams("1"));
 

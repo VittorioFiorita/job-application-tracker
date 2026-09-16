@@ -50,7 +50,14 @@ export async function POST() {
     const summary = applications
         .map((app) => {
             const suggestions = app.matchSuggestions ? JSON.parse(app.matchSuggestions) : [];
-            return `- ${app.position} @ ${app.company.name} | status: ${app.status} | match: ${app.matchScore ?? "non valutato"} | suggerimenti: ${suggestions.join("; ") || "nessuno"}`;
+            const details = [
+                app.location ? `località: ${app.location}` : null,
+                app.employmentType ? `contratto: ${app.employmentType}` : null,
+                app.seniority ? `livello: ${app.seniority}` : null,
+                app.salaryRange ? `salario: ${app.salaryRange}` : null,
+                app.source ? `fonte: ${app.source}` : null,
+            ].filter(Boolean).join(", ");
+            return `- ${app.position} @ ${app.company.name} | status: ${app.status} | match: ${app.matchScore ?? "non valutato"}${details ? ` | ${details}` : ""} | suggerimenti: ${suggestions.join("; ") || "nessuno"}`;
         })
         .join("\n");
 

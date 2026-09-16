@@ -4,6 +4,7 @@ import { getOwnedApplication } from "@/lib/get-owned-application";
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { isRateLimited } from "@/lib/rate-limit";
+import { formatProfileForPrompt } from "@/lib/format-profile";
 
 const anthropic = new Anthropic({apiKey: process.env.ANTHROPIC_API_KEY});
 
@@ -35,20 +36,22 @@ export async function POST(
         where: {userId},
     });
 
-    if (!profile) {
+    const cvSummary = profile ? formatProfileForPrompt(profile) : "";
+
+    if (!cvSummary) {
         return NextResponse.json({ error: "Profilo CV mancante" }, { status: 400 });
     }
 
     const message = await anthropic.messages.create({
         model: "claude-sonnet-5",
-        max_tokens: 500,
+        max_tokens: 1000,
         messages: [
             {
                 role: "user",
                 content: `Confronta questo CV con questa job description e valuta il match.
                
 CV:
-${profile.cvText}
+${cvSummary}
 
 JOB DESCRIPTION:
 ${application.jobDescription}
