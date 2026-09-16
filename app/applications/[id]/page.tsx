@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import MatchBar from "@/components/applications/MatchBar";
+import SectionHeader from "@/components/layout/SectionHeader";
 import { fetchJson } from "@/lib/fetch-json";
 
 type Application = {
@@ -48,35 +49,38 @@ export default function ApplicationDetail() {
     : [];
 
   return (
-    <main className="max-w-5xl mx-auto p-8">
-      <h1 className="text-xl sm:text-2xl font-bold mb-1">{application.position}</h1>
-      <p className="text-foreground/60 mb-1">{application.company.name}</p>
+    <>
+      <SectionHeader title="Candidature" href="/" />
+      <main className="max-w-5xl mx-auto p-8">
+        <h1 className="text-xl sm:text-2xl font-bold mb-1">{application.position}</h1>
+        <p className="text-foreground/60 mb-1">{application.company.name}</p>
 
-      <div className="flex items-center gap-2 text-xs font-mono text-foreground/40 mb-6">
-        <span>#{String(application.id).padStart(5, "0")}</span>
-        <span aria-hidden="true">·</span>
-        <time dateTime={application.createdAt}>
-          {new Date(application.createdAt).toLocaleDateString("it-IT")}
-        </time>
-      </div>
-
-      {application.matchScore !== null && (
-        <div className="bg-foreground/3 border border-foreground/10 rounded-xl p-5 mb-6">
-          <div className="mb-4">
-            <MatchBar score={application.matchScore} />
-          </div>
-          <ul className="list-disc list-inside text-foreground/80 text-sm space-y-1">
-            {suggestions.map((s, i) => (
-              <li key={i}>{s}</li>
-            ))}
-          </ul>
+        <div className="flex items-center gap-2 text-xs font-mono text-foreground/40 mb-6">
+          <span>#{String(application.id).padStart(5, "0")}</span>
+          <span aria-hidden="true">·</span>
+          <time dateTime={application.createdAt}>
+            {new Date(application.createdAt).toLocaleDateString("it-IT")}
+          </time>
         </div>
-      )}
 
-      <h2 className="font-semibold mb-2">Job description</h2>
-      <div className="bg-foreground/3 border border-foreground/10 rounded-xl p-5">
-        <p className="text-foreground/80 whitespace-pre-wrap">{application.jobDescription}</p>
-      </div>
-    </main>
+        {application.matchScore !== null && (
+          <div className="bg-foreground/3 border border-foreground/10 rounded-xl p-5 mb-6">
+            <div className="mb-4">
+              <MatchBar score={application.matchScore} />
+            </div>
+            <ul className="list-disc list-inside text-foreground/80 text-sm space-y-1">
+              {suggestions.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <h2 className="font-semibold mb-2">Job description</h2>
+        <div className="bg-foreground/3 border border-foreground/10 rounded-xl p-5">
+          <p className="text-foreground/80 whitespace-pre-wrap">{application.jobDescription}</p>
+        </div>
+      </main>
+    </>
   );
 }

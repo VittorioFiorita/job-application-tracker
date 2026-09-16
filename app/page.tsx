@@ -7,6 +7,7 @@ import ApplicationForm from "@/components/applications/ApplicationForm";
 import Toast from "@/components/ui/Toast";
 import ConfirmModal from "@/components/ui/ConfirmModal";
 import Button from "@/components/ui/Button";
+import SectionHeader from "@/components/layout/SectionHeader";
 import { fetchJson } from "@/lib/fetch-json";
 
 type Application = {
@@ -130,50 +131,48 @@ export default function Home() {
     );
   }
 
-  return (
-    <main className="max-w-5xl mx-auto p-8">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold">Le mie candidature</h1>
+    return (
+    <>
+      <SectionHeader title="Candidature">
         {!formOpen && (
-          <Button
-            onClick={() => setFormOpen(true)}
-            className="self-start"
-          >
+          <Button onClick={() => setFormOpen(true)}>
             + Nuova candidatura
           </Button>
         )}
-      </div>
-      {formOpen && (
-        <ApplicationForm onSubmit={handleCreate} onCancel={() => setFormOpen(false)} />
-      )}
+      </SectionHeader>
+      <main className="max-w-5xl mx-auto p-8">
+        {formOpen && (
+          <ApplicationForm onSubmit={handleCreate} onCancel={() => setFormOpen(false)} />
+        )}
 
-      {loading ? (
-        <p className="text-gray-400">Caricamento...</p>
-      ) : applications.length === 0 ? (
-        <p className="text-gray-400">Nessuna candidatura ancora.</p>
-      ) : (
-        <ul className="space-y-3">
-          {applications.map((app) => (
-            <ApplicationCard
-              key={app.id}
-              app={app}
-              onStatusChange={handleStatusChange}
-              onMatch={handleMatch}
-              onDelete={handleDelete}
-              isMatching={matchingId === app.id}
-            />
-          ))}
-        </ul>
-      )}
+        {loading ? (
+          <p className="text-gray-400">Caricamento...</p>
+        ) : applications.length === 0 ? (
+          <p className="text-gray-400">Nessuna candidatura ancora.</p>
+        ) : (
+          <ul className="space-y-3">
+            {applications.map((app) => (
+              <ApplicationCard
+                key={app.id}
+                app={app}
+                onStatusChange={handleStatusChange}
+                onMatch={handleMatch}
+                onDelete={handleDelete}
+                isMatching={matchingId === app.id}
+              />
+            ))}
+          </ul>
+        )}
 
-      {toast && <Toast message={toast} onClose={() => setToast(null)} />}
-      {deleteTargetId !== null && (
-        <ConfirmModal
-          message="Eliminare questa candidatura?"
-          onConfirm={confirmDelete}
-          onCancel={() => setDeleteTargetId(null)}
-        />
-      )}
-    </main>
+        {toast && <Toast message={toast} onClose={() => setToast(null)} />}
+        {deleteTargetId !== null && (
+          <ConfirmModal
+            message="Eliminare questa candidatura?"
+            onConfirm={confirmDelete}
+            onCancel={() => setDeleteTargetId(null)}
+          />
+        )}
+      </main>
+    </>
   );
 }

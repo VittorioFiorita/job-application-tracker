@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { fetchJson } from "@/lib/fetch-json";
 import StatCard from "@/components/stats/StatCard";
 import Button from "@/components/ui/Button";
+import SectionHeader from "@/components/layout/SectionHeader";
 
 type Stats = {
     total: number,
@@ -65,48 +66,49 @@ export default function StatsPage() {
 
     const getCount = (status: string) => stats.byStatus.find((s) => s.status === status)?._count ?? 0;
 
-    return (
-        <main className="max-w-5xl mx-auto p-8">
-            <h1 className="text-xl sm:text-2xl font-bold mb-6">Statistiche</h1>
-
-            <div className="grid grid-cols-2 gap-4 mb-8">
-                <StatCard label="Candidature totali" value={stats.total} />
-                <StatCard
-                    label="Match medio"
-                    value={stats.averageMatch !== null ? `${Math.round(stats.averageMatch)}%` : "—"}
-                />
-                <StatCard label="In colloquio" value={getCount("colloquio")} variant="amber" />
-                <StatCard label="Accettate" value={getCount("accettata")} variant="seal" />
-            </div>
-
-            <h2 className="font-semibold mb-3">Distribuzione per status</h2>
-            <ul className="space-y-2">
-                {stats.byStatus.map((s) => (
-                    <li key={s.status} className="flex justify-between border-b border-foreground/10 pb-2">
-                        <span className="capitalize">{s.status}</span>
-                        <span className="font-mono text-foreground/60">{s._count}</span>
-                    </li>
-                ))}
-            </ul>
-
-            <div className="mt-8 pt-6 border-t border-foreground/10">
-                <div className="flex justify-between items-center mb-3">
-                    <h2 className="font-semibold">Analisi AI</h2>
-                    <Button onClick={handleGenerateInsight} disabled={generating} size="sm">
-                        {generating ? "Analisi in corso..." : "Genera Analisi"}
-                    </Button>
+        return (
+        <>
+            <SectionHeader title="Statistiche" />
+            <main className="max-w-5xl mx-auto p-8">
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                    <StatCard label="Candidature totali" value={stats.total} />
+                    <StatCard
+                        label="Match medio"
+                        value={stats.averageMatch !== null ? `${Math.round(stats.averageMatch)}%` : "—"}
+                    />
+                    <StatCard label="In colloquio" value={getCount("colloquio")} variant="amber" />
+                    <StatCard label="Accettate" value={getCount("accettata")} variant="seal" />
                 </div>
-                {insight ? (
-                    <div className="bg-foreground/5 rounded p-4">
-                        <p className="text-sm text-foreground">{insight.content}</p>
-                        <p className="text-xs font-mono text-foreground/40 mt-3">
-                            Generata il {new Date(insight.createdAt).toLocaleString("it-IT")}
-                        </p>
+
+                <h2 className="font-semibold mb-3">Distribuzione per status</h2>
+                <ul className="space-y-2">
+                    {stats.byStatus.map((s) => (
+                        <li key={s.status} className="flex justify-between border-b border-foreground/10 pb-2">
+                            <span className="capitalize">{s.status}</span>
+                            <span className="font-mono text-foreground/60">{s._count}</span>
+                        </li>
+                    ))}
+                </ul>
+
+                <div className="mt-8 pt-6 border-t border-foreground/10">
+                    <div className="flex justify-between items-center mb-3">
+                        <h2 className="font-semibold">Analisi AI</h2>
+                        <Button onClick={handleGenerateInsight} disabled={generating} size="sm">
+                            {generating ? "Analisi in corso..." : "Genera Analisi"}
+                        </Button>
                     </div>
-                ) : (
-                    <p className="text-foreground/60 text-sm">Nessuna analisi generata ancora.</p>
-                )}
-            </div>
-        </main>
+                    {insight ? (
+                        <div className="bg-foreground/5 rounded p-4">
+                            <p className="text-sm text-foreground">{insight.content}</p>
+                            <p className="text-xs font-mono text-foreground/40 mt-3">
+                                Generata il {new Date(insight.createdAt).toLocaleString("it-IT")}
+                            </p>
+                        </div>
+                    ) : (
+                        <p className="text-foreground/60 text-sm">Nessuna analisi generata ancora.</p>
+                    )}
+                </div>
+            </main>
+        </>
     );
 }

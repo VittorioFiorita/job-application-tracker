@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { fetchJson } from "@/lib/fetch-json";
 import Button from "@/components/ui/Button";
+import SectionHeader from "@/components/layout/SectionHeader";
 
 export default function ProfilePage() {
   const [cvText, setCvText] = useState("");
@@ -45,27 +46,29 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="max-w-5xl mx-auto p-8">
-      <h1 className="text-xl sm:text-2xl font-bold mb-1">Il mio profilo</h1>
-      <p className="text-foreground/60 mb-6">
-        Incolla qui il testo del tuo CV. Verrà usato per valutare il match con le candidature.
-      </p>
+    <>
+        <SectionHeader title="Profilo" />
+        <main className="max-w-5xl mx-auto p-8">
+          <p className="text-foreground/60 mb-6">
+            Incolla qui il testo del tuo CV. Verrà usato per valutare il match con le candidature.
+          </p>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-foreground/3 border border-foreground/10 rounded-xl p-5 flex flex-col gap-3"
-      >
-        <textarea
-          value={cvText}
-          onChange={(e) => setCvText(e.target.value)}
-          rows={12}
-          className="bg-foreground/5 border border-foreground/15 rounded-lg p-3 placeholder:text-foreground/40 focus:outline-none focus:border-accent"
-          placeholder="Incolla qui il tuo CV..."
-        />
-        <Button type="submit" disabled={saving} className="self-start">
-          {saving ? "Salvataggio..." : "Salva profilo"}
-        </Button>
-      </form>
-    </main>
+          <form
+            onSubmit={handleSubmit}
+            className="bg-foreground/3 border border-foreground/10 rounded-xl p-5 flex flex-col gap-3"
+          >
+            <textarea
+              value={cvText}
+              onChange={(e) => setCvText(e.target.value)}
+              rows={12}
+              className="bg-foreground/5 border border-foreground/15 rounded-lg p-3 placeholder:text-foreground/40 focus:outline-none focus:border-accent"
+              placeholder="Incolla qui il tuo CV..."
+            />
+            <Button type="submit" disabled={saving} className="self-start">
+              {saving ? "Salvataggio..." : "Salva profilo"}
+            </Button>
+          </form>
+        </main>
+    </>
   );
 }
