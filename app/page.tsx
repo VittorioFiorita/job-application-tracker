@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import ApplicationCard from "@/components/applications/ApplicationCard";
-import ApplicationForm from "@/components/applications/ApplicationForm";
+import ApplicationForm, { type ApplicationFormData } from "@/components/applications/ApplicationForm";
 import Toast from "@/components/ui/Toast";
 import ConfirmModal from "@/components/ui/ConfirmModal";
 import Button from "@/components/ui/Button";
@@ -52,11 +52,7 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleCreate = async (data: {
-    companyName: string;
-    position: string;
-    jobDescription: string;
-  }) => {
+  const handleCreate = async (data: ApplicationFormData) => {
     try {
       await fetchJson("/api/applications", {
         method: "POST",

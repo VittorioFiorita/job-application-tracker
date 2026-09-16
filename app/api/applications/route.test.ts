@@ -73,6 +73,31 @@ describe("POST /api/applications", () => {
 
     expect(prisma.company.create).toHaveBeenCalledWith({ data: { name: "NewCo" } });
   });
+
+    it("passes through the extra job detail fields when creating an application", async () => {
+    mockedAuth.mockResolvedValue({ userId: "user_1" } as never);
+    vi.mocked(prisma.company.findFirst).mockResolvedValue({ id: 1, name: "Google" } as never);
+    vi.mocked(prisma.application.create).mockResolvedValue({ id: 10 } as never);
+
+    await POST(makeRequest({
+      companyName: "Google",
+      position: "Dev",
+      jobDescription: "desc",
+      location: "Milano",
+      employmentType: "full-time",
+      seniority: "junior",
+    }));
+
+    expect(prisma.application.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          location: "Milano",
+          employmentType: "full-time",
+          seniority: "junior",
+        }),
+      })
+    );
+  });
 });
 
 describe("GET /api/applications", () => {

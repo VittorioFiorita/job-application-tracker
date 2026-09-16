@@ -10,7 +10,10 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { companyName, position, jobDescription } = body;
+    const {
+        companyName, position, jobDescription,
+        jobUrl, location, employmentType, seniority, salaryRange, source, notes,
+    } = body;
 
     if(!companyName?.trim() || !position?.trim() || !jobDescription?.trim()) {
         return NextResponse.json(
@@ -31,6 +34,13 @@ export async function POST(request: Request) {
             position,
             jobDescription,
             userId,
+            jobUrl,
+            location,
+            employmentType,
+            seniority,
+            salaryRange,
+            source,
+            notes,
         },
     });
 
