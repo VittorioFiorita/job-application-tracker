@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import MatchBar from "@/components/MatchBar";
+import MatchBar from "@/components/applications/MatchBar";
 import { fetchJson } from "@/lib/fetch-json";
 
 type Application = {

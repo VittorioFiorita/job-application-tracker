@@ -1,7 +1,7 @@
 import Link from "next/link";
-import MatchBar from "@/components/MatchBar";
-import StatusSelect from "@/components/StatusSelect";
-import Button from "./Button";
+import MatchBar from "@/components/applications/MatchBar";
+import StatusSelect from "@/components/applications/StatusSelect";
+import Button from "@/components/ui/Button";
 
 type Application = {
   id: number;

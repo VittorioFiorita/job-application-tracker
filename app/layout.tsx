@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Source_Serif_4, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import Script from "next/script";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/layout/Navbar";
 import "./globals.css"
 
 const sourceSerif = Source_Serif_4({

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react"
 import { fetchJson } from "@/lib/fetch-json";
-import StatCard from "@/components/StatCard";
-import Button from "@/components/Button";
+import StatCard from "@/components/stats/StatCard";
+import Button from "@/components/ui/Button";
 
 type Stats = {
     total: number,

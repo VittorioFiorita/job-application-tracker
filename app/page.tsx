@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import ApplicationCard from "@/components/ApplicationCard";
-import ApplicationForm from "@/components/ApplicationForm";
-import Toast from "@/components/Toast";
-import ConfirmModal from "@/components/ConfirmModal";
-import Button from "@/components/Button";
+import ApplicationCard from "@/components/applications/ApplicationCard";
+import ApplicationForm from "@/components/applications/ApplicationForm";
+import Toast from "@/components/ui/Toast";
+import ConfirmModal from "@/components/ui/ConfirmModal";
+import Button from "@/components/ui/Button";
 import { fetchJson } from "@/lib/fetch-json";
 
 type Application = {
