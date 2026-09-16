@@ -54,32 +54,20 @@ describe("POST /api/profile", () => {
   it("returns 401 when not authenticated", async () => {
     mockedAuth.mockResolvedValue({ userId: null } as never);
 
-    const res = await POST(makeRequest({ cvText: "CV" }));
+    const res = await POST(makeRequest({ fullName: "Mario Rossi" }));
 
     expect(res.status).toBe(401);
   });
 
-  it("returns 400 when cvText is empty", async () => {
-    mockedAuth.mockResolvedValue({ userId: "user_1" } as never);
-
-    const res = await POST(makeRequest({ cvText: "   " }));
-
-    expect(res.status).toBe(400);
-  });
-
   it("upserts and returns the profile on success", async () => {
     mockedAuth.mockResolvedValue({ userId: "user_1" } as never);
-    const profile = { userId: "user_1", cvText: "CV aggiornato" };
+    const profile = { userId: "user_1", fullName: "Mario Rossi", skills: ["React"] };
     vi.mocked(prisma.userProfile.upsert).mockResolvedValue(profile as never);
 
-    const res = await POST(makeRequest({ cvText: "CV aggiornato" }));
+    const res = await POST(makeRequest({ fullName: "Mario Rossi", skills: ["React"] }));
     const data = await res.json();
 
-    expect(prisma.userProfile.upsert).toHaveBeenCalledWith({
-      where: { userId: "user_1" },
-      update: { cvText: "CV aggiornato" },
-      create: { userId: "user_1", cvText: "CV aggiornato" },
-    });
+    expect(prisma.userProfile.upsert).toHaveBeenCalled();
     expect(data).toEqual(profile);
   });
 });

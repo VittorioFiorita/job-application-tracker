@@ -4,21 +4,42 @@ import { useEffect, useState } from "react";
 import { fetchJson } from "@/lib/fetch-json";
 import Button from "@/components/ui/Button";
 import SectionHeader from "@/components/layout/SectionHeader";
+import CvForm from "@/components/profile/CvForm";
+import CvView from "@/components/profile/CvView";
+import type { Profile } from "@/lib/cv-types";
+import { emptyProfile } from "@/lib/cv-types";
 
 export default function ProfilePage() {
-  const [cvText, setCvText] = useState("");
+  const [profile, setProfile] = useState<Profile>(emptyProfile);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const [mode, setMode] = useState<"view" | "edit">("edit");
 
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const data = await fetchJson<{cvText: string} | null>("/api/profile");
-        if (data?.cvText) {
-          setCvText(data.cvText)
+        const data = await fetchJson<Partial<Profile> | null>("/api/profile");
+        if (data) {
+          const merged: Profile = {
+            fullName: data.fullName ?? "",
+            headline: data.headline ?? "",
+            location: data.location ?? "",
+            email: data.email ?? "",
+            phone: data.phone ?? "",
+            website: data.website ?? "",
+            summary: data.summary ?? "",
+            skills: data.skills ?? [],
+            experience: data.experience ?? [],
+            education: data.education ?? [],
+            languages: data.languages ?? [],
+          };
+          setProfile(merged);
+          const hasContent = Boolean(merged.fullName || merged.summary || merged.experience.length > 0);
+          if (hasContent) {
+            setMode("view");
+          }
         }
       } catch {
-        //nessun profilo caricato, il form resta vuoto
+        // nessun profilo salvato, resta in modalità modifica
       } finally {
         setLoading(false);
       }
@@ -26,19 +47,18 @@ export default function ProfilePage() {
     loadProfile();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSaving(true);
+  const handleSave = async (updated: Profile) => {
     try {
       await fetchJson("/api/profile", {
-        method:"POST",
-        headers: {"Content-Type" : "application/json"},
-        body: JSON.stringify({cvText})
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updated),
       });
+      setProfile(updated);
+      setMode("view");
     } catch {
-      //nessun Toast su questa pagina: salvataggio fallito senza feedback visivo
+      // nessun Toast su questa pagina: salvataggio fallito senza feedback visivo, come già discusso
     }
-    setSaving(false);
   };
 
   if (loading) {
@@ -47,28 +67,24 @@ export default function ProfilePage() {
 
   return (
     <>
-        <SectionHeader title="Profilo" />
-        <main className="max-w-5xl mx-auto p-8">
-          <p className="text-foreground/60 mb-6">
-            Incolla qui il testo del tuo CV. Verrà usato per valutare il match con le candidature.
-          </p>
-
-          <form
-            onSubmit={handleSubmit}
-            className="bg-foreground/3 border border-foreground/10 rounded-xl p-5 flex flex-col gap-3"
-          >
-            <textarea
-              value={cvText}
-              onChange={(e) => setCvText(e.target.value)}
-              rows={12}
-              className="bg-foreground/5 border border-foreground/15 rounded-lg p-3 placeholder:text-foreground/40 focus:outline-none focus:border-accent"
-              placeholder="Incolla qui il tuo CV..."
-            />
-            <Button type="submit" disabled={saving} className="self-start">
-              {saving ? "Salvataggio..." : "Salva profilo"}
-            </Button>
-          </form>
-        </main>
+      <SectionHeader title="Profilo">
+        {mode === "view" && (
+          <Button variant="ghost" onClick={() => setMode("edit")}>
+            Modifica
+          </Button>
+        )}
+      </SectionHeader>
+      <main className="max-w-5xl mx-auto p-8">
+        {mode === "edit" ? (
+          <CvForm
+            initialProfile={profile}
+            onSave={handleSave}
+            onCancel={profile.fullName ? () => setMode("view") : undefined}
+          />
+        ) : (
+          <CvView profile={profile} />
+        )}
+      </main>
     </>
   );
 }

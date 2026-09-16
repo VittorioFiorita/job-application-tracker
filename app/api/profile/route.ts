@@ -24,19 +24,15 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { cvText } = body;
-
-    if (!cvText?.trim()) {
-        return NextResponse.json(
-            {error: "cvText obbligatorio"},
-            {status: 400},
-        );
-    }
+    const {
+        fullName, headline, location, email, phone, website,
+        summary, skills, experience, education, languages,
+    } = body;
 
     const profile = await prisma.userProfile.upsert({
         where: { userId },
-        update: { cvText },
-        create: { userId, cvText }
+        update: { fullName, headline, location, email, phone, website, summary, skills, experience, education, languages },
+        create: { userId, fullName, headline, location, email, phone, website, summary, skills, experience, education, languages },
     });
 
     return NextResponse.json(profile);
