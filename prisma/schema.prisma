@@ -32,11 +32,29 @@ model Application {
   jobDescription String
   matchScore Int?
   matchSuggestions String?
+  jobUrl String?
+  location String?
+  employmentType String?
+  seniority String?
+  salaryRange String?
+  source String?
+  notes String?
 }
 
 model UserProfile {
   userId String @id
-  cvText String
+  cvText String?
+  fullName String?
+  headline String?
+  location String?
+  email String?
+  phone String?
+  website String?
+  summary String?
+  skills Json?
+  experience Json?
+  education Json?
+  languages Json?
 }
 
 model Insight {
