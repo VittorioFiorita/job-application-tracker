@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Source_Serif_4, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import Script from "next/script";
-import Navbar from "@/components/layout/Navbar";
+import Sidebar from "@/components/layout/Sidebar";
 import "./globals.css"
 
 const sourceSerif = Source_Serif_4({
@@ -51,8 +51,10 @@ export default function RootLayout({
           `}
         </Script>
         <ClerkProvider>
-          <Navbar />
-          {children}
+          <div className="flex min-h-screen flex-col sm:flex-row">
+            <Sidebar />
+            <div className="flex-1 pb-20 sm:pb-0">{children}</div>
+          </div>
         </ClerkProvider>
       </body>
     </html>
