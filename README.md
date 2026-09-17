@@ -18,9 +18,11 @@ A job application tracker with AI-powered CV matching and insights, built with N
 
 ## Screenshots
 
-![Home - dark mode](docs/screenshots/home-dark.png)
-![Home - light mode](docs/screenshots/home-light.png)
-![Statistiche e insight AI](docs/screenshots/stats.png)
+![Candidature](docs/screenshots/home-dark.png)
+![Dettaglio candidatura](docs/screenshots/applications-detail-dark.png)
+![Profilo / CV](docs/screenshots/profile-dark.png)
+![Statistiche e insight AI](docs/screenshots/stats-dark.png)
+![Accesso](docs/screenshots/login-dark.png)
 ![Vista mobile](docs/screenshots/mobile.png)
 
 ## Tech stack
