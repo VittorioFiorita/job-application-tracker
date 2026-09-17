@@ -46,11 +46,11 @@ export default function StatsPage() {
     }, []);
 
     if (loading) {
-        return <p className="p-8 text-foreground/60">Caricamento...</p>;
+        return <p className="p-6 text-foreground/60">Caricamento...</p>;
     }
 
     if (!stats) {
-        return <p className="p-8 text-foreground/60">Impossibile caricare le statistiche</p>;
+        return <p className="p-6 text-foreground/60">Impossibile caricare le statistiche</p>;
     }
 
     const handleGenerateInsight = async () => {
@@ -69,8 +69,8 @@ export default function StatsPage() {
         return (
         <>
             <SectionHeader title="Statistiche" />
-            <main className="max-w-5xl mx-auto p-8">
-                <div className="grid grid-cols-2 gap-4 mb-8">
+            <main className="max-w-5xl mx-auto p-6">
+                <div className="grid grid-cols-2 gap-4 mb-6">
                     <StatCard label="Candidature totali" value={stats.total} />
                     <StatCard
                         label="Match medio"
@@ -90,7 +90,7 @@ export default function StatsPage() {
                     ))}
                 </ul>
 
-                <div className="mt-8 pt-6 border-t border-foreground/10">
+                <div className="mt-6 pt-5 border-t border-foreground/10">
                     <div className="flex justify-between items-center mb-3">
                         <h2 className="font-semibold">Analisi AI</h2>
                         <Button onClick={handleGenerateInsight} disabled={generating} size="sm">

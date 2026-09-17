@@ -90,7 +90,7 @@ export default function CvForm({ initialProfile, onSave, onCancel }: CvFormProps
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <section className="bg-foreground/3 border border-foreground/10 rounded-xl p-5 flex flex-col gap-3">
         <h2 className="font-semibold">Intestazione</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

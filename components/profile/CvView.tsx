@@ -9,7 +9,7 @@ export default function CvView({ profile }: { profile: Profile }) {
   const hasSkills = profile.skills.length > 0;
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6">
       <section className="bg-foreground/3 border border-foreground/10 rounded-xl p-5">
         <h2 className="font-serif text-xl font-semibold">{profile.fullName || "Nome non impostato"}</h2>
         {profile.headline && <p className="text-foreground/70">{profile.headline}</p>}

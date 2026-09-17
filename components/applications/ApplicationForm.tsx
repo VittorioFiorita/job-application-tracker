@@ -53,7 +53,7 @@ export default function ApplicationForm({ onSubmit, onCancel }: ApplicationFormP
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-foreground/3 border border-foreground/10 rounded-xl p-5 flex flex-col gap-3 mb-8">
+    <form onSubmit={handleSubmit} className="bg-foreground/3 border border-foreground/10 rounded-xl p-5 flex flex-col gap-3 mb-6">
       <input className={inputClass} type="text" placeholder="Azienda" value={form.companyName} onChange={(e) => update("companyName", e.target.value)} required />
       <input className={inputClass} type="text" placeholder="Posizione" value={form.position} onChange={(e) => update("position", e.target.value)} required />
       <textarea className={inputClass} placeholder="Job description (incolla qui l'annuncio)" value={form.jobDescription} onChange={(e) => update("jobDescription", e.target.value)} rows={4} required />

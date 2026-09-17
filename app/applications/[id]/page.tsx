@@ -44,11 +44,11 @@ export default function ApplicationDetail() {
   }, [params.id]);
 
   if (loading) {
-    return <p className="max-w-5xl mx-auto p-8 text-foreground/60">Caricamento...</p>;
+    return <p className="max-w-5xl mx-auto p-6 text-foreground/60">Caricamento...</p>;
   }
 
   if (!application) {
-    return <p className="max-w-5xl mx-auto p-8 text-foreground/60">Candidatura non trovata</p>;
+    return <p className="max-w-5xl mx-auto p-6 text-foreground/60">Candidatura non trovata</p>;
   }
 
   const suggestions: string[] = application.matchSuggestions
@@ -58,8 +58,8 @@ export default function ApplicationDetail() {
   return (
     <>
       <SectionHeader title="Candidature" href="/" />
-      <main className="max-w-5xl mx-auto p-8">
-        <h1 className="text-xl sm:text-2xl font-bold mb-1">{application.position}</h1>
+      <main className="max-w-5xl mx-auto p-6">
+        <h1 className="text-lg sm:text-xl font-bold mb-1">{application.position}</h1>
         <p className="text-foreground/60 mb-1">{application.company.name}</p>
 
         <div className="flex items-center gap-2 text-xs font-mono text-foreground/40 mb-6">

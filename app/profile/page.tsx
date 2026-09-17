@@ -62,7 +62,7 @@ export default function ProfilePage() {
   };
 
   if (loading) {
-    return <p className="max-w-5xl mx-auto p-8 text-foreground/60">Caricamento...</p>;
+    return <p className="max-w-5xl mx-auto p-6 text-foreground/60">Caricamento...</p>;
   }
 
   return (
@@ -74,7 +74,7 @@ export default function ProfilePage() {
           </Button>
         )}
       </SectionHeader>
-      <main className="max-w-5xl mx-auto p-8">
+      <main className="max-w-5xl mx-auto p-6">
         {mode === "edit" ? (
           <CvForm
             initialProfile={profile}

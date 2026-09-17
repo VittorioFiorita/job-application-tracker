@@ -172,7 +172,7 @@ export default function Home() {
           </Button>
         )}
       </SectionHeader>
-      <main className="max-w-5xl mx-auto p-8">
+      <main className="max-w-5xl mx-auto p-6">
         {formOpen && (
           <ApplicationForm onSubmit={handleCreate} onCancel={() => setFormOpen(false)} />
         )}
