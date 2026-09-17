@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useUser } from "@clerk/nextjs";
+import { useUser, SignInButton, SignUpButton } from "@clerk/nextjs";
 import ApplicationCard from "@/components/applications/ApplicationCard";
 import ApplicationsTable from "@/components/applications/ApplicationsTable";
 import ApplicationsToolbar from "@/components/applications/ApplicationsToolbar";
@@ -150,15 +150,25 @@ export default function Home() {
 
   if (!isSignedIn) {
     return (
-      <main className="max-w-2xl mx-auto p-8 text-center">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4">JobDossier</h1>
-        <p className="text-gray-400 mb-6">
-          Gestisci le tue candidature di lavoro e scopri quanto il tuo profilo
-          combacia con ogni annuncio, grazie a un&apos;analisi automatica basata su AI.
-        </p>
-        <p className="text-gray-400">
-          Accedi o registrati dal pulsante in alto per iniziare.
-        </p>
+      <main className="min-h-[70vh] flex items-center justify-center p-6">
+        <div className="max-w-sm w-full text-center">
+          <p className="font-serif text-lg font-semibold mb-2">JobDossier</p>
+          <p className="text-foreground/60 text-sm mb-6">
+            Accedi per gestire le tue candidature.
+          </p>
+          <div className="flex flex-col gap-2">
+            <SignInButton mode="modal">
+              <button className="text-sm px-4 py-2 rounded-lg bg-accent text-white hover:opacity-90 w-full">
+                Accedi
+              </button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <button className="text-sm px-4 py-2 rounded-lg border border-foreground/20 text-foreground hover:bg-foreground/5 w-full">
+                Registrati
+              </button>
+            </SignUpButton>
+          </div>
+        </div>
       </main>
     );
   }
